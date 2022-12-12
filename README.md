@@ -24,4 +24,4 @@
 - Détail d'un produit avancé (plus d'infos, commentaires, etc.)
 - Profil (liste de ses produits, image de profil, amis, etc.)
 - Amis (ajout/suppression, liste d'amis, profil d'un ami, liste de ses produits, messagerie)
-- Navbar (avec les catégories)
+- Navbar (avec les catégories) + Nouvelle page pour chaque catégorie (avec la liste des produits de cette catégorie)
