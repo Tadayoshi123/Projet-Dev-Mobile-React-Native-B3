@@ -14,7 +14,6 @@
     - Affichage de la liste des produits par catégorie
     - Recherche par nom
     - Scroll Infini
-- Profil
 
 ### Pour le 9 Janvier (mon anniversaire) :
 - Détail d'un produit (au moins le nom, le prix et la description)
