@@ -16,7 +16,7 @@
     - Scroll Infini
 
 ### Pour le 9 Janvier (mon anniversaire) :
-- Détail d'un produit (au moins le nom, le prix et la description)
+- Détail d'un produit (au moins le nom, le prix et la description et les catégories)
 - Panier
 - Visuel de l'app
 
