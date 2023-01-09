@@ -40,7 +40,11 @@ const AuthStack = () => {
           // },
         },
       }}>
-      <Stack.Screen name="MENU" component={Home} options={{title: 'Storm'}} />
+      <Stack.Screen
+        name="MENU"
+        component={Home}
+        options={{title: 'GAME LIST'}}
+      />
       <Stack.Screen
         name="Details"
         component={Details}

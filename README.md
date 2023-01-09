@@ -13,9 +13,8 @@
 - Home (liste des produits) :
     - Affichage de la liste des produits par catégorie
     - Recherche par nom
-    - Scroll Infini
 
-### Pour le 9 Janvier (mon anniversaire) :
+### Pour le 9 Janvier :
 - Détail d'un produit (au moins le nom, le prix et la description et les catégories)
 - Panier
 - Visuel de l'app
