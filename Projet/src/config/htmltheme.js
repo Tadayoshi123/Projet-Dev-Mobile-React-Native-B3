@@ -51,7 +51,7 @@ const HtmlTheme = {
     color: Theme.colors.textColor,
     fontSize: Theme.fontSizes.body,
     fontFamily: Theme.fonts.regular,
-    listStyleType: 'none',
+    listStyleType: 'square',
   },
   strong: {
     color: Theme.colors.textColor,
@@ -62,6 +62,7 @@ const HtmlTheme = {
     color: Theme.colors.textColor,
     fontSize: Theme.fontSizes.body,
     fontFamily: Theme.fonts.regular,
+    textAlign: 'justify',
   },
   input: {
     color: Theme.colors.textColor,

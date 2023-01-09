@@ -14,7 +14,7 @@ const Routes = props => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="SE CONNECTER" component={PublicStack} />
+        <Stack.Screen name="LOGIN" component={PublicStack} />
         <Stack.Screen name="MENU" component={AuthStack} />
       </Stack.Navigator>
     </NavigationContainer>

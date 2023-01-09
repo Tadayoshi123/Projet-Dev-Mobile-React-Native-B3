@@ -1,65 +1,133 @@
-import {useNavigation} from '@react-navigation/native';
-import axios from 'axios';
-import React, {useEffect} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
-import Avatar from '../components/avatar';
-import {STEAM_KEY} from '@env';
+import steamDetails from '../config/steamDetails.json';
+import React, {useEffect, useState} from 'react';
 import ContainerView from '../components/styledComponents/home/containerview';
 import ProductName from '../components/styledComponents/home/productname';
+import {TouchableOpacity, SectionList, FlatList} from 'react-native';
+import Avatar from '../components/avatar';
+import {useNavigation} from '@react-navigation/native';
+import CardView from '../components/styledComponents/home/cardview';
+import InformationCard from '../components/styledComponents/home/informationContainer';
+import {
+  BuyButton,
+  AddToLibraryButton,
+  AddToWishlistButton,
+} from '../components/styledComponents/generalized/buybutton';
+import ButtonText from '../components/styledComponents/generalized/buttontext';
+import Price from '../components/styledComponents/generalized/price';
+import BuyGameCard from '../components/styledComponents/generalized/buygamecard';
+import CategorieHeader from '../components/styledComponents/home/categorieheader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const APIList = 'https://api.steampowered.com/ISteamApps/GetAppList/v2';
-const offset = 20;
+// Les objets de steamDetails sont accessibles via steamDetails.apps
 
 const Home = () => {
-  const [products, setProducts] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  useEffect(() => {
-    console.log('wesh');
-    // Requête axios pour récupérer la liste des produits d'APIList et la mettre dans le state products
-    axios({
-      method: 'get',
-      url: APIList,
-      params: {
-        ts: 1,
-        limit: 20,
-        offset: page * offset,
-        // apikey: STEAM_KEY,
-      },
-    })
-      .then(response => {
-        console.log(response.data.applist.apps);
-        setProducts(response.data.applist.apps);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [page]);
-
   const navigation = useNavigation();
+  const [products, setProducts] = useState([]);
 
-  const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Details', {id: item.appid})}>
-        <Avatar
-          imageSource={`https://cdn.akamai.steamstatic.com/steam/apps/${item.appid}/header.jpg`}
-        />
-        <ProductName>{item.name}</ProductName>
-      </TouchableOpacity>
+  const filterGames = () => {
+    const filteredGames = steamDetails.apps.filter(
+      game => game.type === 'game',
     );
+    return filteredGames;
   };
 
+  const getAllUniqueGenres = () => {
+    const genres = [];
+    filterGames().forEach(game => {
+      if (game.genres) {
+        game.genres.forEach(genre => {
+          if (!genres.includes(genre.description)) {
+            genres.push(genre.description);
+          }
+        });
+      }
+    });
+    return genres;
+  };
+
+  // Function that will use getAllUniqueGenres to create an array of objects with the genre as a key and an array of games as a value
+  const createGenreObject = () => {
+    const genres = getAllUniqueGenres();
+    const genreObject = [];
+    genres.forEach(genre => {
+      const games = [];
+      filterGames().forEach(game => {
+        if (game.genres) {
+          game.genres.forEach(gameGenre => {
+            if (gameGenre.description === genre) {
+              games.push(game);
+            }
+          });
+        }
+      });
+      games.sort(() => 0.5 - Math.random() * 2);
+      if (games.length >= 4) {
+        const randomGames = games.slice(0, 4);
+        genreObject.push({title: genre, data: randomGames});
+      } else {
+        genreObject.push({title: genre, data: games});
+      }
+    });
+    return genreObject;
+  };
+  createGenreObject();
+
+  useEffect(() => {
+    setProducts(filterGames());
+  }, []);
+
   return (
-    // Afficher un FlatList avec les items de la liste de produits
     <ContainerView>
-      <FlatList
-        data={products}
-        renderItem={renderItem}
-        keyExtractor={item => item.appid}
-        onEndReached={() => {
-          setPage(page + 1);
-        }}
-        onEndReachedThreshold={0.4}
+      <SectionList
+        sections={createGenreObject()}
+        keyExtractor={(item, index) => item + index}
+        contentContainerStyle={{}}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Details', {id: item.steam_appid})
+            }>
+            <CardView>
+              <Avatar
+                imageSource={`https://cdn.akamai.steamstatic.com/steam/apps/${item.steam_appid}/header.jpg`}
+              />
+              {item.is_free === true ? (
+                <InformationCard>
+                  <ProductName>{item.name}</ProductName>
+                  <BuyGameCard>
+                    <Price>Free</Price>
+                    <AddToLibraryButton>
+                      <ButtonText>Add to Library</ButtonText>
+                    </AddToLibraryButton>
+                  </BuyGameCard>
+                </InformationCard>
+              ) : item.is_free === false && item.price_overview ? (
+                <InformationCard>
+                  <ProductName>{item.name}</ProductName>
+                  <BuyGameCard>
+                    <Price>{item.price_overview.final_formatted}</Price>
+                    <BuyButton>
+                      <ButtonText>Add to Shopping Cart</ButtonText>
+                    </BuyButton>
+                  </BuyGameCard>
+                </InformationCard>
+              ) : (
+                <InformationCard>
+                  <ProductName>{item.name}</ProductName>
+                  <BuyGameCard>
+                    <Price>Not Available</Price>
+                    <AddToWishlistButton>
+                      <ButtonText>Add to Wishlist</ButtonText>
+                    </AddToWishlistButton>
+                  </BuyGameCard>
+                </InformationCard>
+              )}
+            </CardView>
+          </TouchableOpacity>
+        )}
+        renderSectionHeader={({section: {title}}) => (
+          <CategorieHeader>{title}</CategorieHeader>
+        )}
       />
     </ContainerView>
   );

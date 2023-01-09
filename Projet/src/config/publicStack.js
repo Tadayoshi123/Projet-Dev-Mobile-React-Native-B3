@@ -3,6 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/login';
 import {ActivityIndicator, SafeAreaView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Theme from './theme';
+
 const Stack = createNativeStackNavigator();
 
 const PublicStack = ({navigation}) => {
@@ -29,9 +31,21 @@ const PublicStack = ({navigation}) => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: Theme.colors.secondary,
+        },
+        headerTintColor: Theme.colors.senary,
+        headerTitleStyle: {
+          fontWeight: 'thin',
+          fontFamily: Theme.fonts.thin,
+          fontSize: 36,
+        },
       }}>
-      <Stack.Screen name="Login" component={Login} options={{title: 'Login'}} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{title: 'SIGN IN'}}
+      />
     </Stack.Navigator>
   );
 };

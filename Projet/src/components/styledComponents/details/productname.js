@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import Theme from '../../../config/theme';
 
 const ProductName = styled.Text`
-  font-size: 30px;
+  font-size: ${Theme.fontSizes.h3};
   color: ${Theme.colors.textColor};
   font-weight: ${Theme.fonts.bold};
   margin: 10px;
