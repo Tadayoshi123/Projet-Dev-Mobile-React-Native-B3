@@ -12,7 +12,7 @@ const Avatar = ({imageSource}) => {
 
 const ImageStyled = styled.Image`
   // Width takes the full width of the parent
-  width: UseWindowDimensions() / 4;
+  width: 200px;
   height: 150px;
   margin: 10px;
   background-color: ${Theme.colors.primary};

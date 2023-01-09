@@ -6,8 +6,7 @@ const CardView = styled.View`
   display: flex;
   flex-direction: column;
   margin-bottom: 5px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-radius: 4px;
   color: ${Theme.colors.senary};
 `;
 

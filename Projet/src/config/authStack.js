@@ -41,16 +41,16 @@ const AuthStack = () => {
         },
       }}>
       <Stack.Screen
-        name="MENU"
+        name="Home"
         component={Home}
-        options={{title: 'GAME LIST'}}
+        options={{title: 'Game List'}}
       />
       <Stack.Screen
         name="Details"
         component={Details}
-        options={{title: 'DETAILS'}}
+        options={{title: 'Game Details'}}
       />
-      <Stack.Screen name="Cart" component={Cart} options={{title: 'PANIER'}} />
+      <Stack.Screen name="Cart" component={Cart} options={{title: 'Cart'}} />
     </Stack.Navigator>
   );
 };

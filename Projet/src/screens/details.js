@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 import Avatar from '../components/avatar';
 import HtmlTheme from '../config/htmltheme';
 import RenderHtml from 'react-native-render-html';
@@ -29,6 +30,8 @@ import Price from '../components/styledComponents/generalized/price';
 //On recupere la props route à laquelle on a passé l'id d'un héro
 const Details = ({route}) => {
   const [product, setProduct] = React.useState({});
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios({
@@ -101,7 +104,7 @@ const Details = ({route}) => {
           <AddGameText>{product.name} is Free !</AddGameText>
           <BuyGameCard>
             <Price>Free</Price>
-            <AddToLibraryButton>
+            <AddToLibraryButton onPress={() => navigation.navigate('Cart')}>
               <ButtonText>Add to Library</ButtonText>
             </AddToLibraryButton>
           </BuyGameCard>

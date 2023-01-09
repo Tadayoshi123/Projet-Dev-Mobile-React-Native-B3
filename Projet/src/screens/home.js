@@ -96,7 +96,8 @@ const Home = () => {
                   <ProductName>{item.name}</ProductName>
                   <BuyGameCard>
                     <Price>Free</Price>
-                    <AddToLibraryButton>
+                    <AddToLibraryButton
+                      onPress={() => navigation.navigate('Cart')}>
                       <ButtonText>Add to Library</ButtonText>
                     </AddToLibraryButton>
                   </BuyGameCard>
@@ -106,7 +107,7 @@ const Home = () => {
                   <ProductName>{item.name}</ProductName>
                   <BuyGameCard>
                     <Price>{item.price_overview.final_formatted}</Price>
-                    <BuyButton>
+                    <BuyButton onPress={() => navigation.navigate('Cart')}>
                       <ButtonText>Add to Shopping Cart</ButtonText>
                     </BuyButton>
                   </BuyGameCard>
@@ -116,7 +117,8 @@ const Home = () => {
                   <ProductName>{item.name}</ProductName>
                   <BuyGameCard>
                     <Price>Not Available</Price>
-                    <AddToWishlistButton>
+                    <AddToWishlistButton
+                      onPress={() => navigation.navigate('Cart')}>
                       <ButtonText>Add to Wishlist</ButtonText>
                     </AddToWishlistButton>
                   </BuyGameCard>
