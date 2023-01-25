@@ -2,8 +2,8 @@ import steamDetails from '../config/steamDetails.json';
 import React, {useEffect, useState} from 'react';
 import ContainerView from '../components/styledComponents/home/containerview';
 import ProductName from '../components/styledComponents/home/productname';
-import {TouchableOpacity, SectionList, FlatList} from 'react-native';
-import Avatar from '../components/avatar';
+import {TouchableOpacity, SectionList, ToastAndroid} from 'react-native';
+import ProductImage from '../components/styledComponents/productImage';
 import {useNavigation} from '@react-navigation/native';
 import CardView from '../components/styledComponents/home/cardview';
 import InformationCard from '../components/styledComponents/home/informationContainer';
@@ -72,6 +72,24 @@ const Home = () => {
   };
   createGenreObject();
 
+  const addToCart = async (id, name, price) => {
+    const cart = await AsyncStorage.getItem('cart');
+    if (cart) {
+      const cartArray = JSON.parse(cart);
+      const game = cartArray.find(game => game.id === id);
+      if (game) {
+        ToastAndroid.show('Game already in cart', ToastAndroid.SHORT);
+      } else {
+        cartArray.push({id, name, price});
+        await AsyncStorage.setItem('cart', JSON.stringify(cartArray));
+        ToastAndroid.show('Game added to cart', ToastAndroid.SHORT);
+      }
+    } else {
+      await AsyncStorage.setItem('cart', JSON.stringify([{id, name, price}]));
+      ToastAndroid.show('Game added to cart', ToastAndroid.SHORT);
+    }
+  };
+
   useEffect(() => {
     setProducts(filterGames());
   }, []);
@@ -88,7 +106,7 @@ const Home = () => {
               navigation.navigate('Details', {id: item.steam_appid})
             }>
             <CardView>
-              <Avatar
+              <ProductImage
                 imageSource={`https://cdn.akamai.steamstatic.com/steam/apps/${item.steam_appid}/header.jpg`}
               />
               {item.is_free === true ? (
@@ -97,7 +115,9 @@ const Home = () => {
                   <BuyGameCard>
                     <Price>Free</Price>
                     <AddToLibraryButton
-                      onPress={() => navigation.navigate('Cart')}>
+                      onPress={() => {
+                        navigation.navigate('Home');
+                      }}>
                       <ButtonText>Add to Library</ButtonText>
                     </AddToLibraryButton>
                   </BuyGameCard>
@@ -107,7 +127,15 @@ const Home = () => {
                   <ProductName>{item.name}</ProductName>
                   <BuyGameCard>
                     <Price>{item.price_overview.final_formatted}</Price>
-                    <BuyButton onPress={() => navigation.navigate('Cart')}>
+                    <BuyButton
+                      onPress={() => {
+                        addToCart(
+                          item.steam_appid,
+                          item.name,
+                          item.price_overview.final_formatted,
+                        );
+                        navigation.navigate('Home');
+                      }}>
                       <ButtonText>Add to Shopping Cart</ButtonText>
                     </BuyButton>
                   </BuyGameCard>
@@ -118,7 +146,9 @@ const Home = () => {
                   <BuyGameCard>
                     <Price>Not Available</Price>
                     <AddToWishlistButton
-                      onPress={() => navigation.navigate('Cart')}>
+                      onPress={() => {
+                        navigation.navigate('Cart');
+                      }}>
                       <ButtonText>Add to Wishlist</ButtonText>
                     </AddToWishlistButton>
                   </BuyGameCard>

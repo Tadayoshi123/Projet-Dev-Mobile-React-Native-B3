@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
-import Avatar from '../components/avatar';
+import ProductImage from '../components/styledComponents/productImage';
 import HtmlTheme from '../config/htmltheme';
 import RenderHtml from 'react-native-render-html';
 import {STEAM_KEY} from '@env';
@@ -55,7 +55,7 @@ const Details = ({route}) => {
 
   return (
     <ScrollView>
-      <Avatar
+      <ProductImage
         imageSource={`https://cdn.akamai.steamstatic.com/steam/apps/${route.params.id}/header.jpg`}
       />
       {/* Condition to check if there's html in product.name or not and if there is renderhtml the product.name else render it with ProductName*/}

@@ -1,8 +1,8 @@
-// Styled Component for React Native Text Named ProductNameSearchBar
+// Styled Component for React Native Text Named SearchBarProductName
 import styled from 'styled-components/native';
 import Theme from '../../../config/theme';
 
-const ProductNameSearchBar = styled.Text`
+const SearchBarProductName = styled.Text`
   font-size: 16px;
   color: ${Theme.colors.textColor};
   font-weight: ${Theme.fonts.bold};
@@ -10,4 +10,4 @@ const ProductNameSearchBar = styled.Text`
   /* text-align: center; */
 `;
 
-export default ProductNameSearchBar;
+export default SearchBarProductName;
