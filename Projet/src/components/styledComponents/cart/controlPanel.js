@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const CartView = styled.View`
+const ControlPanel = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  margin: 10px;
 `;
 
-export default CartView;
+export default ControlPanel;

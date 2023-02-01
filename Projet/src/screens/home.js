@@ -1,9 +1,9 @@
 import steamDetails from '../config/steamDetails.json';
 import React, {useEffect, useState} from 'react';
 import ContainerView from '../components/styledComponents/home/containerview';
-import ProductName from '../components/styledComponents/home/productname';
+import ProductName from '../components/styledComponents/generalized/productname';
 import {TouchableOpacity, SectionList, ToastAndroid} from 'react-native';
-import ProductImage from '../components/styledComponents/productImage';
+import ProductImage from '../components/styledComponents/generalized/productImage';
 import {useNavigation} from '@react-navigation/native';
 import CardView from '../components/styledComponents/home/cardview';
 import InformationCard from '../components/styledComponents/home/informationContainer';
@@ -16,7 +16,8 @@ import ButtonText from '../components/styledComponents/generalized/buttontext';
 import Price from '../components/styledComponents/generalized/price';
 import BuyGameCard from '../components/styledComponents/generalized/buygamecard';
 import CategorieHeader from '../components/styledComponents/home/categorieheader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import addToCart from '../functions/addToCart';
+import addToLibrary from '../functions/addToLibrary';
 
 // Les objets de steamDetails sont accessibles via steamDetails.apps
 
@@ -45,7 +46,6 @@ const Home = () => {
     return genres;
   };
 
-  // Function that will use getAllUniqueGenres to create an array of objects with the genre as a key and an array of games as a value
   const createGenreObject = () => {
     const genres = getAllUniqueGenres();
     const genreObject = [];
@@ -71,24 +71,6 @@ const Home = () => {
     return genreObject;
   };
   createGenreObject();
-
-  const addToCart = async (id, name, price) => {
-    const cart = await AsyncStorage.getItem('cart');
-    if (cart) {
-      const cartArray = JSON.parse(cart);
-      const game = cartArray.find(game => game.id === id);
-      if (game) {
-        ToastAndroid.show('Game already in cart', ToastAndroid.SHORT);
-      } else {
-        cartArray.push({id, name, price});
-        await AsyncStorage.setItem('cart', JSON.stringify(cartArray));
-        ToastAndroid.show('Game added to cart', ToastAndroid.SHORT);
-      }
-    } else {
-      await AsyncStorage.setItem('cart', JSON.stringify([{id, name, price}]));
-      ToastAndroid.show('Game added to cart', ToastAndroid.SHORT);
-    }
-  };
 
   useEffect(() => {
     setProducts(filterGames());
@@ -116,6 +98,7 @@ const Home = () => {
                     <Price>Free</Price>
                     <AddToLibraryButton
                       onPress={() => {
+                        addToLibrary(item.steam_appid, item.name);
                         navigation.navigate('Home');
                       }}>
                       <ButtonText>Add to Library</ButtonText>
@@ -145,10 +128,7 @@ const Home = () => {
                   <ProductName>{item.name}</ProductName>
                   <BuyGameCard>
                     <Price>Not Available</Price>
-                    <AddToWishlistButton
-                      onPress={() => {
-                        navigation.navigate('Cart');
-                      }}>
+                    <AddToWishlistButton>
                       <ButtonText>Add to Wishlist</ButtonText>
                     </AddToWishlistButton>
                   </BuyGameCard>

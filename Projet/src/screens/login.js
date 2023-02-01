@@ -5,7 +5,7 @@ import LoginButton from '../components/styledComponents/login/loginbutton';
 import TextInputContainer from '../components/styledComponents/login/textinputcontainer';
 import TextInputStyled from '../components/styledComponents/login/textinputstyled';
 import ButtonText from '../components/styledComponents/generalized/buttontext';
-import ContainerView from '../components/styledComponents/generalized/containerview';
+import ContainerView from '../components/styledComponents/generalized/CartContainerview';
 import Label from '../components/styledComponents/login/label';
 
 const Login = ({navigation}) => {

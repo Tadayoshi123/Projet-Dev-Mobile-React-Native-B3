@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
-import ProductImage from '../components/styledComponents/productImage';
+import ProductImage from '../components/styledComponents/generalized/productImage';
 import HtmlTheme from '../config/htmltheme';
 import RenderHtml from 'react-native-render-html';
 import {STEAM_KEY} from '@env';
@@ -26,7 +26,8 @@ import AddGameCard from '../components/styledComponents/details/addgamecard';
 import AddGameText from '../components/styledComponents/details/addgametext';
 import BuyGameCard from '../components/styledComponents/generalized/buygamecard';
 import Price from '../components/styledComponents/generalized/price';
-
+import addToCart from '../functions/addToCart';
+import addToLibrary from '../functions/addToLibrary';
 //On recupere la props route à laquelle on a passé l'id d'un héro
 const Details = ({route}) => {
   const [product, setProduct] = React.useState({});
@@ -104,7 +105,11 @@ const Details = ({route}) => {
           <AddGameText>{product.name} is Free !</AddGameText>
           <BuyGameCard>
             <Price>Free</Price>
-            <AddToLibraryButton onPress={() => navigation.navigate('Cart')}>
+            <AddToLibraryButton
+              onPress={() => {
+                addToLibrary(product.steam_appid, product.name);
+                navigation.navigate('Home');
+              }}>
               <ButtonText>Add to Library</ButtonText>
             </AddToLibraryButton>
           </BuyGameCard>
@@ -114,7 +119,15 @@ const Details = ({route}) => {
           <AddGameText>Buy {product.name}</AddGameText>
           <BuyGameCard>
             <Price>{product.price_overview?.final_formatted}</Price>
-            <BuyButton>
+            <BuyButton
+              onPress={() => {
+                addToCart(
+                  route.params.id,
+                  product.name,
+                  product.price_overview.final_formatted,
+                );
+                navigation.navigate('Home');
+              }}>
               <ButtonText>Add to Shopping Cart</ButtonText>
             </BuyButton>
           </BuyGameCard>

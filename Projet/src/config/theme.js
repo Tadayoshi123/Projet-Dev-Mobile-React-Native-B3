@@ -20,7 +20,7 @@ const Theme = {
     wishlist_button: '#e74c3c',
   },
   fonts: {
-    regular: 'Roboto-Regular',
+    regular: 'Arial',
     medium: 'Roboto-Medium',
     bold: 'Roboto-Bold',
     light: 'Roboto-Light',
