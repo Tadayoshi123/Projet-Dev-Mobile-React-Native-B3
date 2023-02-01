@@ -36,6 +36,7 @@
     - Détail d'un produit : Fait, peut être que si j'avais le temps j'aurais implémenté les extraits vidéos des produits et rajouter des liens vers les dlcs et/ou des produits similaires.
     - Panier : Fait, il manque juste l'ajout des produits achetés dans la bibliothèque de l'utilisateur.
     - Visuel de l'app: Bon... Je me suis donné mais React-Native c'est pas facile et mon excuse c'est que Steam Mobile est moche.
+    - Notifications push : Fait avec Notifee, peut-être en rajouter un peu plus pour d'autres fonctionnalités la prochaine fois.
 
 - Ce qui n'est pas réalisé :
     - Register : Y'en a juste pas car comme expliqué plus haut, j'ai utilisé l'API du cours pour le login.
